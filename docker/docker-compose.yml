@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+
+  php-fpm:
+    build:
+      context: ./php-fpm
+    container_name: fuzzy_php
+    volumes:
+      - ../:/var/www/fuzzy_logic
+    tty: true
+
+  nginx:
+    image: nginx:1.25.4
+    container_name: fuzzy_nginx
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ../:/var/www/fuzzy_logic
+    depends_on:
+      - php-fpm
+    ports:
+      - ${NGINX_HOST_HTTP_PORT}:80
+      - ${NGINX_HOST_HTTPS_PORT}:443
+
+  mysql:
+    image: postgres
+    container_name: fuzzy_pg
+    environment:
+      POSTGRES_DB: ${PG_DATABASE}
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+    ports:
+      - ${PG_PORT}:3306
