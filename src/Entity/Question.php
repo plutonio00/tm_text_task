@@ -11,7 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Question
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column]
     private int $id;
 
@@ -21,8 +20,9 @@ class Question
     #[ORM\OneToMany(mappedBy: 'question_id', targetEntity: Answer::class)]
     private Collection $answers;
 
-    public function __construct()
+    public function __construct(int $id, string $text)
     {
-        $this->answers = new ArrayCollection();
+        $this->id = $id;
+        $this->text = $text;
     }
 }

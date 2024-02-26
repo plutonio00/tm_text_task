@@ -15,9 +15,27 @@ class Answer
 
     #[ORM\ManyToOne(inversedBy: 'answers')]
     #[ORM\JoinColumn(name: 'question_id', referencedColumnName: 'id', nullable: false)]
-    private Question $questionId;
+    private Question $question;
+
+    #[ORM\Column(length: 255)]
+    private string $text;
 
     #[ORM\Column(name: 'is_correct')]
     private bool $isCorrect;
 
+    /**
+     * @param Question $questionId
+     * @param string $text
+     * @param bool $isCorrect
+     */
+    public function __construct(
+        Question $question,
+        string $text,
+        bool $isCorrect,
+    )
+    {
+        $this->question = $question;
+        $this->text = $text;
+        $this->isCorrect = $isCorrect;
+    }
 }
