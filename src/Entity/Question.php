@@ -41,10 +41,9 @@ class Question
         return $this->answers;
     }
 
-    public function getShuffleAnswers(): ArrayCollection
-    {
+    public function getShuffleAnswers(): array {
         $answers = $this->answers->toArray();
         shuffle($answers);
-        return new ArrayCollection($answers);
+        return $answers;
     }
 }
