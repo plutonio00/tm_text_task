@@ -14,7 +14,7 @@ class Answer
     private int $id;
 
     #[ORM\ManyToOne(inversedBy: 'answers')]
-    #[ORM\JoinColumn(name: 'question_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\JoinColumn(nullable: false)]
     private Question $question;
 
     #[ORM\Column(length: 255)]
@@ -37,5 +37,25 @@ class Answer
         $this->question = $question;
         $this->text = $text;
         $this->isCorrect = $isCorrect;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getQuestion(): Question
+    {
+        return $this->question;
+    }
+
+    public function getText(): string
+    {
+        return $this->text;
+    }
+
+    public function isCorrect(): bool
+    {
+        return $this->isCorrect;
     }
 }

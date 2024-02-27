@@ -17,12 +17,34 @@ class Question
     #[ORM\Column(length: 255)]
     private string $text;
 
-    #[ORM\OneToMany(mappedBy: 'question_id', targetEntity: Answer::class)]
+    #[ORM\OneToMany(mappedBy: 'question', targetEntity: Answer::class)]
     private Collection $answers;
 
     public function __construct(int $id, string $text)
     {
         $this->id = $id;
         $this->text = $text;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getText(): string
+    {
+        return $this->text;
+    }
+
+    public function getAnswers(): Collection
+    {
+        return $this->answers;
+    }
+
+    public function getShuffleAnswers(): ArrayCollection
+    {
+        $answers = $this->answers->toArray();
+        shuffle($answers);
+        return new ArrayCollection($answers);
     }
 }

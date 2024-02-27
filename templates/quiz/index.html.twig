@@ -1,0 +1,31 @@
+{% extends 'common/main_layout.html.twig' %}
+
+{% block content_body %}
+
+    <div class="container mt-5">
+        <form id="surveyForm" action="" method="post">
+            {% for question in questions %}
+                <div class="question-container card" id="{{ question.id }}">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="{{ question.id }}">Вопрос № {{ loop.index }}: {{ question.text }}</label><br>
+                            {% for answer in question.shuffleAnswers %}
+                                <label>
+                                    <input type="checkbox" name="{{ question.id }}" value="{{ answer.id }}">
+                                </label> {{ answer.text }}<br>
+                            {% endfor %}
+                        </div>
+
+                        {% if loop.last %}
+                            <button type="submit" class="btn btn-primary">Отправить</button>
+                        {% else %}
+                            <button id="next-btn" type="button" class="btn btn-primary">Дальше</button>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('form_intention') }}">
+        </form>
+    </div>
+
+{% endblock %}
