@@ -1,11 +1,17 @@
 {% extends 'common/main_layout.html.twig' %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/quiz.js') }}"></script>
+{% endblock %}
+
 {% block content_body %}
 
     <div class="container mt-5">
         <form id="surveyForm" action="" method="post">
             {% for question in questions %}
-                <div class="question-container card" id="{{ question.id }}">
+                {% set display = (loop.first) ? '' : 'd-none' %}
+                <div class="question-container card {{ display }}" data-id="{{ question.id }}">
                     <div class="card-body">
                         <div class="form-group">
                             <label for="{{ question.id }}">Вопрос № {{ loop.index }}: {{ question.text }}</label><br>
@@ -19,7 +25,7 @@
                         {% if loop.last %}
                             <button type="submit" class="btn btn-primary">Отправить</button>
                         {% else %}
-                            <button id="next-btn" type="button" class="btn btn-primary">Дальше</button>
+                            <button  type="button" class="btn btn-primary next-btn">Дальше</button>
                         {% endif %}
                     </div>
                 </div>
