@@ -35,7 +35,7 @@ Cсылка на GitHub / Bitbucket с кодом и инструкцией по
 Для этого нужно выполнить команды в том порядке, в котором они указаны.
 В ОС должен быть установлен docker-compose
 
-1. cd /<path-to-project>/docker
+1. cd /path-to-project/docker
 2. make add-env
 3. make up-build
 4. make composer-install
