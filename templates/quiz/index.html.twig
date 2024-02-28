@@ -8,22 +8,22 @@
 {% block content_body %}
 
     <div class="container mt-5">
-        <form id="surveyForm" action="" method="post">
+        <form id="quiz-form" action="" method="post">
             {% for question in questions %}
                 {% set display = (loop.first) ? '' : 'd-none' %}
-                <div class="question-container card {{ display }}" data-question-id="{{ question.id }}">
+                <div class="question-container card {{ display }}">
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="{{ question.id }}">Вопрос № {{ loop.index }}: {{ question.text }}</label><br>
+                            <p>Вопрос № {{ loop.index }}: {{ question.text }}</p><br>
                             {% for answer in question.shuffleAnswers %}
                                 <label>
-                                    <input type="checkbox" name="{{ question.id }}" value="{{ answer.id }}">
+                                    <input type="checkbox" name="answers[]" value="{{ answer.id }}">
                                 </label> {{ answer.text }}<br>
                             {% endfor %}
                         </div>
 
                         {% if loop.last %}
-                            <button id="submit-btn" type="button" class="btn btn-primary">Закончить опрос</button>
+                            <button id="submit-btn" type="submit" class="btn btn-primary">Закончить опрос</button>
                         {% else %}
                             <button  type="button" class="btn btn-primary next-btn">Дальше</button>
                         {% endif %}

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\QuestionRepository;
+use App\Service\QuizService;
 use JsonException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -26,10 +27,16 @@ class QuizController extends AbstractController
      * @throws JsonException
      */
     #[Route(path: '/quiz/process', name: 'quiz_process', methods: ['POST'])]
-    public function processQuiz(Request $request): Response
+    public function processQuiz(
+        Request $request,
+        QuizService $quizService,
+    ): Response
     {
        $data = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
-       dd($data);
-       return new JsonResponse([]);
+       $quizDTO = $quizService->getQuizResult($data);
+
+       return $this->render('quiz/_result.html.twig', [
+
+       ]);
     }
 }

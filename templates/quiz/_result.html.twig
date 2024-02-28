@@ -1,0 +1,17 @@
+<div id="result" class="card d-none">
+    <div class="card-body">
+        <h3>Поздравляем, вы ответили на все вопросы теста!</h3>
+        <p>Всего вопросов: {{ quizDTO.questionsCount }}</p>
+        <p>Из них правильных ответов: {{ quizDTO.successfulQuestionsCount }}</p>
+
+        <h3>На эти вопросы вы ответили правильно: </h3>
+        {% for value in quizDTO.successfulQuestions|values %}
+            <p>{{ value['text'] }}</p>
+        {% endfor %}
+
+        <h3>На эти вопросы вы ответили неправильно: </h3>
+        {% for value in quizDTO.failedQuestions|values %}
+            <p>{{ value['text'] }}</p>
+        {% endfor %}
+    </div>
+</div>
