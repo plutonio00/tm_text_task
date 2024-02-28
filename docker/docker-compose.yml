@@ -9,6 +9,10 @@ services:
     volumes:
       - ../:/var/www/fuzzy_logic
     tty: true
+    environment:
+      PHP_IDE_CONFIG: "serverName=fuzzy-logic.local"
+    extra_hosts:
+      - host.docker.internal:host-gateway
 
   nginx:
     image: nginx:1.25.4

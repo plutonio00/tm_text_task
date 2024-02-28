@@ -1,0 +1,7 @@
+{% if questions|length > 0 %}
+    {% for value in questions %}
+        <p>{{ value['text'] }}</p>
+    {% endfor %}
+{% else %}
+    <p>Нет таких вопросов</p>
+{% endif %}

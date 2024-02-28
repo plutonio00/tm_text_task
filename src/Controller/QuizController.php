@@ -32,11 +32,13 @@ class QuizController extends AbstractController
         QuizService $quizService,
     ): Response
     {
-       $data = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
+       $data = $request->request->all()['answers'];
        $quizDTO = $quizService->getQuizResult($data);
 
-       return $this->render('quiz/_result.html.twig', [
-
+       $view = $this->renderView('quiz/_result.html.twig', [
+            'quizDTO' => $quizDTO,
        ]);
+
+       return new JsonResponse(['success' => true, 'view' => $view]);
     }
 }

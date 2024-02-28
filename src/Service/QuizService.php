@@ -10,13 +10,13 @@ use Doctrine\ORM\EntityManagerInterface;
 class QuizService
 {
     public function __construct(
-        private AnswerRepository $answerRepository,
-        private EntityManagerInterface $entityManager,
+        private readonly AnswerRepository       $answerRepository,
+        private readonly EntityManagerInterface $entityManager,
     )
     {
     }
 
-    public function getQuizResult(array $answerIds): array
+    public function getQuizResult(array $answerIds): QuizDTO
     {
         $answers = $this->answerRepository->findBy(['id' => $answerIds]);
         $answersList = $this->sortAnswersByQuestionId($answers);
@@ -27,7 +27,7 @@ class QuizService
 
     private function processAnswers(array $answersList): QuizDTO
     {
-        $quizDTO = new QuizDTO(count($answersList));
+        $quizDTO = new QuizDTO();
 
         foreach ($answersList as $questionId => $answers) {
             $isSuccessful = true;
@@ -44,7 +44,7 @@ class QuizService
             $quizDTO->addQuestionData(
                 $questionId,
                 $isSuccessful,
-                array_column($answers, 'id'),
+                array_map(static fn($answer) => $answer->getId(), $answers),
                 $questionText
             );
         }
@@ -72,8 +72,6 @@ class QuizService
     private function saveResult(QuizDTO $quizDTO): void
     {
         $quizResult = new QuizResult(
-            $quizDTO->getQuestionsCount(),
-            $quizDTO->getSuccessfulQuestionsCount(),
             $quizDTO->getQuizResultDetails(),
         );
 

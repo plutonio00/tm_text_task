@@ -4,17 +4,11 @@ namespace App\DTO;
 
 class QuizDTO
 {
-    private int $questionsCount;
-    private array $successfulQuestions;
-    private array $failedQuestions;
-
     public function __construct(
-        int $questionsCount,
+        private array $successfulQuestions = [],
+        private array $failedQuestions = [],
     )
     {
-        $this->questionsCount = $questionsCount;
-        $this->successfulQuestions = [];
-        $this->failedQuestions = [];
     }
 
     public function addQuestionData(
@@ -34,12 +28,17 @@ class QuizDTO
 
     public function getQuestionsCount(): int
     {
-        return $this->questionsCount;
+        return count($this->successfulQuestions) + count($this->failedQuestions);
     }
 
     public function getSuccessfulQuestionsCount(): int
     {
         return count($this->successfulQuestions);
+    }
+
+    public function getFailedQuestionsCount(): int
+    {
+        return count($this->failedQuestions);
     }
 
     public function getQuizResultDetails(): string

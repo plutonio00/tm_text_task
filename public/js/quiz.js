@@ -1,30 +1,35 @@
 $(document).ready(function () {
 
     $('.next-btn').on('click', function () {
-        if (!validateAnswer($(this))) {
+        let $currentContainer = $(this).closest('.question-container');
+
+        if (!isValidAnswer($currentContainer)) {
             return;
         }
 
-        let $container = $(this).closest('.question-container');
-        let $nextContainer = $container.next('.question-container');
+        let $nextContainer = $currentContainer.next('.question-container');
 
-        $container.addClass('d-none');
+        $currentContainer.addClass('d-none');
         $nextContainer.removeClass('d-none');
     });
 
-    function validateAnswer ($btn) {
-        let checkboxesChecked = $btn.closest('.question-container').find('input[type="checkbox"]:checked').length;
+    function isValidAnswer ($container) {
+        let checkboxesChecked = $container.find('input[type="checkbox"]:checked').length;
 
         if (checkboxesChecked === 0) {
             alert('Выберите хотя бы один вариант ответа');
             return false;
         }
+
+        return true;
     }
 
     $('#quiz-form').on('submit', function(e) {
         e.preventDefault();
 
-        if (!validateAnswer($(this))) {
+        let $currentContainer = $('#submit-btn').closest('.question-container');
+
+        if (!isValidAnswer($currentContainer)) {
             return;
         }
 
@@ -33,9 +38,18 @@ $(document).ready(function () {
             url: '/quiz/process',
             data: $(this).serialize(),
             success: function(response) {
+                if (response.success) {
+                    let $resultContainer = $('#result-container');
+                    $resultContainer.html(response.view);
+                    let $lastQuestionContainer = $('#quiz-form .question-container').last();
+                    $lastQuestionContainer.addClass('d-none');
+                    $resultContainer.removeClass('d-none');
+                } else {
+                    alert('Произошла ошибка при обработке ответов. Попробуйте еще раз');
+                }
             },
-            error: function(error) {
-                alert('Произошла ошибка при отправке данных на сервер:' + error);
+            error: function() {
+                alert('Произошла ошибка при обработке ответов. Попробуйте еще раз');
             }
         });
 

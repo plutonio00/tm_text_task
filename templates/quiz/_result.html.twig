@@ -1,17 +1,14 @@
-<div id="result" class="card d-none">
+<div class="card">
     <div class="card-body">
         <h3>Поздравляем, вы ответили на все вопросы теста!</h3>
         <p>Всего вопросов: {{ quizDTO.questionsCount }}</p>
-        <p>Из них правильных ответов: {{ quizDTO.successfulQuestionsCount }}</p>
+        <p>Из них правильных ответов: {{ quizDTO.successfulQuestionsCount }}, неправильных
+            - {{ quizDTO.failedQuestionsCount }}</p>
 
-        <h3>На эти вопросы вы ответили правильно: </h3>
-        {% for value in quizDTO.successfulQuestions|values %}
-            <p>{{ value['text'] }}</p>
-        {% endfor %}
+        <h5>На эти вопросы вы ответили правильно: </h5>
+        {% include 'quiz/_question_list.html.twig' with {'questions' : quizDTO.successfulQuestions} %}
 
-        <h3>На эти вопросы вы ответили неправильно: </h3>
-        {% for value in quizDTO.failedQuestions|values %}
-            <p>{{ value['text'] }}</p>
-        {% endfor %}
+        <h5>На эти вопросы вы ответили неправильно: </h5>
+        {% include 'quiz/_question_list.html.twig' with {'questions' : quizDTO.failedQuestions} %}
     </div>
 </div>
