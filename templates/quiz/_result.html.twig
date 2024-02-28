@@ -10,5 +10,7 @@
 
         <h5>На эти вопросы вы ответили неправильно: </h5>
         {% include 'quiz/_question_list.html.twig' with {'questions' : quizDTO.failedQuestions} %}
+
+        <a href="/" class="btn btn-primary">Пройти тест заново</a>
     </div>
 </div>
