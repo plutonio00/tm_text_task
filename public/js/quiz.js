@@ -35,7 +35,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'POST',
-            url: '/quiz/process',
+            url: $(this).attr('action'),
             data: $(this).serialize(),
             success: function(response) {
                 if (response.success) {

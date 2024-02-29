@@ -29,16 +29,13 @@ class QuizService
     {
         $quiz = new Quiz(new DateTime());
 
-        foreach ($selectedVariantsSorted as $selectedVariants) {
+        foreach ($selectedVariantsSorted as $item) {
             $isRight = true;
-            $question = null;
+            $question = $item['question'];
+            $selectedVariants = $item['selected_variants'];
 
             foreach ($selectedVariants as $selectedVariant) {
                 $isRight = $isRight && $selectedVariant->isCorrect();
-
-                if (!$question) {
-                    $question = $selectedVariant->getQuestion();
-                }
             }
 
             $quiz->addAnswer(new Answer($isRight, $question, $selectedVariants));
@@ -47,21 +44,25 @@ class QuizService
         return $quiz;
     }
 
-    private function sortSelectedVariantsByQuestionId(array $answersVariants): array
+    private function sortSelectedVariantsByQuestionId(array $selectedVariants): array
     {
-        $answersVariantsList = [];
+        $selectedVariantsList = [];
 
-        foreach ($answersVariants as $answerVariant) {
-            $questionId = $answerVariant->getQuestion()->getId();
+        foreach ($selectedVariants as $selectedVariant) {
+            $question = $selectedVariant->getQuestion();
+            $questionId = $question->getId();
 
-            if (!isset($answersVariantsList[$questionId])) {
-                $answersVariantsList[$questionId] = [];
+            if (!isset($selectedVariantsList[$questionId])) {
+                $selectedVariantsList[$questionId] = [
+                    'question' => $question,
+                    'selected_variants' => [],
+                ];
             }
 
-            $answersVariantsList[$questionId][] = $answerVariant;
+            $selectedVariantsList[$questionId]['selected_variants'][] = $selectedVariant;
         }
 
-        return $answersVariantsList;
+        return $selectedVariantsList;
     }
 
     public function saveResult(Quiz $quiz): void

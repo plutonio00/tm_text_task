@@ -39,12 +39,12 @@ return [
     [
         'question_id' => 3,
         'text' => '1',
-        'is_correct' => true,
+        'is_correct' => false,
     ],
     [
         'question_id' => 3,
         'text' => '6',
-        'is_correct' => false,
+        'is_correct' => true,
     ],
     [
         'question_id' => 3,
@@ -74,7 +74,7 @@ return [
     [
         'question_id' => 5,
         'text' => '6',
-        'is_correct' => true,
+        'is_correct' => false,
     ],
     [
         'question_id' => 5,
@@ -84,16 +84,16 @@ return [
     [
         'question_id' => 5,
         'text' => '10',
-        'is_correct' => false,
+        'is_correct' => true,
     ],
     [
         'question_id' => 5,
         'text' => '9',
-        'is_correct' => true,
+        'is_correct' => false,
     ],
     [
         'question_id' => 5,
         'text' => '0',
-        'is_correct' => true,
+        'is_correct' => false,
     ],
 ];

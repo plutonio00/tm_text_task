@@ -8,7 +8,7 @@
 {% block content_body %}
 
     <div class="container mt-5">
-        <form id="quiz-form" action="" method="post">
+        <form id="quiz-form" action="/quiz/process" method="post">
             {% for question in questions %}
                 {% set display = (loop.first) ? '' : 'd-none' %}
                 <div class="question-container card {{ display }}">
