@@ -1,0 +1,12 @@
+.result-icon {
+    font-size: 30px;
+    vertical-align: middle;
+}
+
+.right {
+    color: green;
+}
+
+.wrong {
+    color: red;
+}

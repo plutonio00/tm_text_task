@@ -41,7 +41,7 @@ class QuizService
                 }
             }
 
-            $quiz->addAnswer(new Answer($isRight, $question, $selectedVariants, $quiz));
+            $quiz->addAnswer(new Answer($isRight, $question, $selectedVariants));
         }
 
         return $quiz;

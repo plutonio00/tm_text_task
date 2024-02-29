@@ -37,7 +37,7 @@ class QuizController extends AbstractController
        $quizService->saveResult($quiz);
 
        $view = $this->renderView('quiz/_result.html.twig', [
-            'quiz' => $quiz,
+            'statistic' => $quiz->getStatistic(),
        ]);
 
        return new JsonResponse(['success' => true, 'view' => $view]);

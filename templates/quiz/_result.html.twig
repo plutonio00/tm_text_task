@@ -1,16 +1,24 @@
 <div class="card">
     <div class="card-body">
         <h3>Поздравляем, вы ответили на все вопросы теста!</h3>
-        <p>Всего вопросов: {{ quizDTO.questionsCount }}</p>
-        <p>Из них правильных ответов: {{ quizDTO.successfulQuestionsCount }}, неправильных
-            - {{ quizDTO.failedQuestionsCount }}</p>
+        <p>Всего вопросов: {{ statistic['answersCount'] }}</p>
+        <p>Из них правильных ответов: {{ statistic['rightAnswersCount'] }}, неправильных
+            - {{ statistic['wrongAnswersCount'] }}</p>
 
-        <h5>На эти вопросы вы ответили правильно: </h5>
-        {% include 'quiz/_question_list.html.twig' with {'questions' : quizDTO.successfulQuestions} %}
+        <div class="card">
+            <div class="card-body">
+                <h4>На эти вопросы вы ответили правильно: </h4>
+                {% include 'quiz/_answers_list.html.twig' with {'answers' : statistic['rightAnswers']} %}
+            </div>
+        </div>
 
-        <h5>На эти вопросы вы ответили неправильно: </h5>
-        {% include 'quiz/_question_list.html.twig' with {'questions' : quizDTO.failedQuestions} %}
+        <div class="card mt-3">
+            <div class="card-body">
+                <h4>На эти вопросы вы ответили неправильно: </h4>
+                {% include 'quiz/_answers_list.html.twig' with {'answers' : statistic['wrongAnswers']} %}
+            </div>
+        </div>
 
-        <a href="/" class="btn btn-primary">Пройти тест заново</a>
+        <a href="/" class="btn btn-primary mt-3">Пройти тест заново</a>
     </div>
 </div>

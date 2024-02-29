@@ -33,13 +33,11 @@ class Answer
         bool $isRight,
         Question $question,
         array $variants,
-        Quiz $quiz,
     )
     {
         $this->isRight = $isRight;
         $this->question = $question;
         $this->variants = new ArrayCollection($variants);
-        $this->quiz = $quiz;
     }
 
 
@@ -48,51 +46,23 @@ class Answer
         return $this->id;
     }
 
-    public function getQuiz(): ?Quiz
-    {
-        return $this->quiz;
-    }
-
-    public function setQuiz(?Quiz $quiz): static
-    {
-        $this->quiz = $quiz;
-
-        return $this;
-    }
-
     public function getQuestion(): ?Question
     {
         return $this->question;
     }
 
-    public function setQuestion(?Question $question): static
-    {
-        $this->question = $question;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, AnswerVariant>
-     */
     public function getVariants(): Collection
     {
         return $this->variants;
     }
 
-    public function addVariant(AnswerVariant $variant): static
+    public function setQuiz(Quiz $quiz): void
     {
-        if (!$this->variants->contains($variant)) {
-            $this->variants->add($variant);
-        }
-
-        return $this;
+        $this->quiz = $quiz;
     }
 
-    public function removeVariant(AnswerVariant $variant): static
+    public function isRight(): bool
     {
-        $this->variants->removeElement($variant);
-
-        return $this;
+        return $this->isRight;
     }
 }

@@ -30,14 +30,6 @@ class Quiz
         $this->finishedAt = $finishedAt;
     }
 
-    /**
-     * @return Collection<int, Answer>
-     */
-    public function getAnswers(): Collection
-    {
-        return $this->answers;
-    }
-
     public function addAnswer(Answer $answer): static
     {
         if (!$this->answers->contains($answer)) {
@@ -48,40 +40,17 @@ class Quiz
         return $this;
     }
 
-    public function removeAnswer(Answer $answer): static
+    public function getStatistic(): array
     {
-        if ($this->answers->removeElement($answer)) {
-            // set the owning side to null (unless already changed)
-            if ($answer->getQuiz() === $this) {
-                $answer->setQuiz(null);
-            }
-        }
+        $rightAnswers = $this->answers->filter(fn(Answer $answer) => $answer->isRight());
+        $wrongAnswers = $this->answers->filter(fn(Answer $answer) => !$answer->isRight());
 
-        return $this;
-    }
-
-    public function getAnswersCount(): int
-    {
-        return count($this->answers);
-    }
-
-    public function getRightAnswersCount(): int
-    {
-        return $this->answers->filter(fn($answer) => $answer->isRigth())->count();
-    }
-
-    public function getWrongAnswersCount(): int
-    {
-        return $this->answers->filter(fn($answer) => !$answer->isRigth())->count();
-    }
-
-    public function getRightAnswers(): Collection
-    {
-        return $this->answers->filter(fn($answer) => $answer->isRigth());
-    }
-
-    public function getWrongAnswers(): Collection
-    {
-        return $this->answers->filter(fn($answer) => !$answer->isRigth());
+        return [
+            'rightAnswers' => $rightAnswers,
+            'wrongAnswers' => $wrongAnswers,
+            'rightAnswersCount' => count($rightAnswers),
+            'wrongAnswersCount' => count($wrongAnswers),
+            'answersCount' => count($this->answers),
+        ];
     }
 }

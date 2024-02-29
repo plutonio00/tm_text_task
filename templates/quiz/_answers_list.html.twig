@@ -1,0 +1,15 @@
+{% if answers|length > 0 %}
+    {% for answer in answers %}
+        <h5>{{ answer.question.text }}</h5>
+        <br>
+        <p class="mb-0">На этот вопрос были даны следующие ответы:</p>
+        {% for variant in answer.variants %}
+            <p class="mb-0">
+                {{ variant.text }} - <i class="bi bi-{{ variant.isCorrect ? 'check right' : 'x wrong' }} result-icon"></i>
+            </p>
+        {% endfor %}
+        <hr>
+    {% endfor %}
+{% else %}
+    <p>Нет таких вопросов</p>
+{% endif %}
