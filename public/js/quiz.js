@@ -24,6 +24,12 @@ $(document).ready(function () {
         return true;
     }
 
+    $('#start-btn').on('click', function () {
+        $('#greeting').addClass('d-none');
+        let $firstQuestionContainer = $('#quiz-form .question-container').first();
+        $firstQuestionContainer.removeClass('d-none');
+    });
+
     $('#quiz-form').on('submit', function(e) {
         e.preventDefault();
 
