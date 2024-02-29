@@ -3,79 +3,70 @@
 namespace App\Service;
 
 use App\DTO\QuizDTO;
-use App\Entity\QuizResult;
-use App\Repository\AnswerRepository;
+use App\Entity\Answer;
+use App\Entity\Quiz;
+use App\Repository\AnswerVariantRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 
 class QuizService
 {
     public function __construct(
-        private readonly AnswerRepository       $answerRepository,
-        private readonly EntityManagerInterface $entityManager,
+        private readonly AnswerVariantRepository $answerVariantRepository,
+        private readonly EntityManagerInterface  $entityManager,
     )
     {
     }
 
-    public function getQuizResult(array $answerIds): QuizDTO
+    public function getQuizResult(array $selectedVariantsIds): Quiz
     {
-        $answers = $this->answerRepository->findBy(['id' => $answerIds]);
-        $answersList = $this->sortAnswersByQuestionId($answers);
-        $quizDTO = $this->processAnswers($answersList);
-        $this->saveResult($quizDTO);
-        return $quizDTO;
+        $selectedVariants = $this->answerVariantRepository->findBy(['id' => $selectedVariantsIds]);
+        $selectedVariantsSorted = $this->sortSelectedVariantsByQuestionId($selectedVariants);
+        return $this->processAnswers($selectedVariantsSorted);
     }
 
-    private function processAnswers(array $answersList): QuizDTO
+    private function processAnswers(array $selectedVariantsSorted): Quiz
     {
-        $quizDTO = new QuizDTO();
+        $quiz = new Quiz(new DateTime());
 
-        foreach ($answersList as $questionId => $answers) {
-            $isSuccessful = true;
-            $questionText = '';
+        foreach ($selectedVariantsSorted as $selectedVariants) {
+            $isRight = true;
+            $question = null;
 
-            foreach ($answers as $answer) {
-                $isSuccessful &= $answer->isCorrect();
+            foreach ($selectedVariants as $selectedVariant) {
+                $isRight = $isRight && $selectedVariant->isCorrect();
 
-                if (!$questionText) {
-                    $questionText = $answer->getQuestion()->getText();
+                if (!$question) {
+                    $question = $selectedVariant->getQuestion();
                 }
             }
 
-            $quizDTO->addQuestionData(
-                $questionId,
-                $isSuccessful,
-                array_map(static fn($answer) => $answer->getId(), $answers),
-                $questionText
-            );
+            $quiz->addAnswer(new Answer($isRight, $question, $selectedVariants, $quiz));
         }
 
-        return $quizDTO;
+        return $quiz;
     }
 
-    private function sortAnswersByQuestionId(array $answers): array
+    private function sortSelectedVariantsByQuestionId(array $answersVariants): array
     {
-        $answersList = [];
+        $answersVariantsList = [];
 
-        foreach ($answers as $answer) {
-            $questionId = $answer->getQuestion()->getId();
+        foreach ($answersVariants as $answerVariant) {
+            $questionId = $answerVariant->getQuestion()->getId();
 
-            if (!isset($answersList[$questionId])) {
-                $answersList[$questionId] = [];
+            if (!isset($answersVariantsList[$questionId])) {
+                $answersVariantsList[$questionId] = [];
             }
 
-            $answersList[$questionId][] = $answer;
+            $answersVariantsList[$questionId][] = $answerVariant;
         }
 
-        return $answersList;
+        return $answersVariantsList;
     }
 
-    private function saveResult(QuizDTO $quizDTO): void
+    public function saveResult(Quiz $quiz): void
     {
-        $quizResult = new QuizResult(
-            $quizDTO->getQuizResultDetails(),
-        );
-
-        $this->entityManager->persist($quizResult);
+        $this->entityManager->persist($quiz);
         $this->entityManager->flush();
     }
 }

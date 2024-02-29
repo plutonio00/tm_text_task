@@ -17,6 +17,9 @@ class Question
     #[ORM\Column(length: 255)]
     private string $text;
 
+    #[ORM\OneToMany(mappedBy: 'question', targetEntity: AnswerVariant::class)]
+    private Collection $answersVariants;
+
     #[ORM\OneToMany(mappedBy: 'question', targetEntity: Answer::class)]
     private Collection $answers;
 
@@ -24,6 +27,7 @@ class Question
     {
         $this->id = $id;
         $this->text = $text;
+        $this->answers = new ArrayCollection();
     }
 
     public function getId(): int
@@ -36,14 +40,14 @@ class Question
         return $this->text;
     }
 
-    public function getAnswers(): Collection
+    public function getAnswersVariants(): Collection
     {
-        return $this->answers;
+        return $this->answersVariants;
     }
 
-    public function getShuffleAnswers(): array {
-        $answers = $this->answers->toArray();
-        shuffle($answers);
-        return $answers;
+    public function getShuffleAnswersVariants(): array {
+        $answersVariants = $this->answersVariants->toArray();
+        shuffle($answersVariants);
+        return $answersVariants;
     }
 }

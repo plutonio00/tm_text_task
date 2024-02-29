@@ -33,10 +33,11 @@ class QuizController extends AbstractController
     ): Response
     {
        $data = $request->request->all()['answers'];
-       $quizDTO = $quizService->getQuizResult($data);
+       $quiz = $quizService->getQuizResult($data);
+       $quizService->saveResult($quiz);
 
        $view = $this->renderView('quiz/_result.html.twig', [
-            'quizDTO' => $quizDTO,
+            'quiz' => $quiz,
        ]);
 
        return new JsonResponse(['success' => true, 'view' => $view]);

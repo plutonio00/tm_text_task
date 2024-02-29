@@ -2,23 +2,23 @@
 
 namespace App\Repository;
 
-use App\Entity\QuizResult;
+use App\Entity\Quiz;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<QuizResult>
+ * @extends ServiceEntityRepository<Quiz>
  *
- * @method QuizResult|null find($id, $lockMode = null, $lockVersion = null)
- * @method QuizResult|null findOneBy(array $criteria, array $orderBy = null)
- * @method QuizResult[]    findAll()
- * @method QuizResult[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Quiz|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Quiz|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Quiz[]    findAll()
+ * @method Quiz[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class QuizResultRepository extends ServiceEntityRepository
+class QuizRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, QuizResult::class);
+        parent::__construct($registry, Quiz::class);
     }
 
 //    /**

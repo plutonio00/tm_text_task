@@ -15,10 +15,10 @@
                     <div class="card-body">
                         <div class="form-group">
                             <p>Вопрос № {{ loop.index }}: {{ question.text }}</p><br>
-                            {% for answer in question.shuffleAnswers %}
+                            {% for answerVariant in question.shuffleAnswersVariants %}
                                 <label>
-                                    <input type="checkbox" name="answers[]" value="{{ answer.id }}">
-                                </label> {{ answer.text }}<br>
+                                    <input type="checkbox" name="answers[]" value="{{ answerVariant.id }}">
+                                </label> {{ answerVariant.text }}<br>
                             {% endfor %}
                         </div>
 
