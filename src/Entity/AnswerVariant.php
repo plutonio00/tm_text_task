@@ -28,18 +28,6 @@ class AnswerVariant
     #[ORM\ManyToMany(targetEntity: Answer::class, mappedBy: 'variants')]
     private Collection $answers;
 
-    public function __construct(
-        Question $question,
-        string $text,
-        bool $isCorrect,
-    )
-    {
-        $this->question = $question;
-        $this->text = $text;
-        $this->isCorrect = $isCorrect;
-        $this->answers = new ArrayCollection();
-    }
-
     public function getId(): int
     {
         return $this->id;
@@ -58,32 +46,5 @@ class AnswerVariant
     public function isCorrect(): bool
     {
         return $this->isCorrect;
-    }
-
-    /**
-     * @return Collection<int, Answer>
-     */
-    public function getAnswers(): Collection
-    {
-        return $this->answers;
-    }
-
-    public function addAnswer(Answer $answer): static
-    {
-        if (!$this->answers->contains($answer)) {
-            $this->answers->add($answer);
-            $answer->addVariant($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAnswer(Answer $answer): static
-    {
-        if ($this->answers->removeElement($answer)) {
-            $answer->removeVariant($this);
-        }
-
-        return $this;
     }
 }

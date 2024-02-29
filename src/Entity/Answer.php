@@ -40,12 +40,6 @@ class Answer
         $this->variants = new ArrayCollection($variants);
     }
 
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     public function getQuestion(): ?Question
     {
         return $this->question;
