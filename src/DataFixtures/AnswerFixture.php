@@ -11,7 +11,7 @@ class AnswerFixture extends BaseFixture implements DependentFixtureInterface
 {
     protected function getDataFile(): string
     {
-        return __DIR__ . '/data/answers.php';
+        return __DIR__ . '/data/answers_variants.php';
     }
 
     public function getDependencies(): array

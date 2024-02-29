@@ -23,6 +23,12 @@ class Question
     #[ORM\OneToMany(mappedBy: 'question', targetEntity: Answer::class)]
     private Collection $answers;
 
+    public function __construct(int $id, string $text)
+    {
+        $this->id = $id;
+        $this->text = $text;
+    }
+
     public function getId(): int
     {
         return $this->id;

@@ -28,6 +28,13 @@ class AnswerVariant
     #[ORM\ManyToMany(targetEntity: Answer::class, mappedBy: 'variants')]
     private Collection $answers;
 
+    public function __construct(Question $question, string $text, bool $isCorrect)
+    {
+        $this->question = $question;
+        $this->text = $text;
+        $this->isCorrect = $isCorrect;
+    }
+
     public function getId(): int
     {
         return $this->id;
