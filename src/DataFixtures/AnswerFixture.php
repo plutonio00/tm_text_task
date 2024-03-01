@@ -2,8 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\AnswerVariant;
-use App\Entity\Question;
+use App\DataFixtures\Entity\AnswerVariant;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
@@ -28,6 +27,7 @@ class AnswerFixture extends BaseFixture implements DependentFixtureInterface
 
         foreach ($data as $item) {
             $entity = new AnswerVariant(
+                $item['id'],
                 $this->getReference('question_' . $item['question_id']),
                 $item['text'],
                 $item['is_correct'],

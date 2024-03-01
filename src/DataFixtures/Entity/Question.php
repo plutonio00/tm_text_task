@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Entity;
+namespace App\DataFixtures\Entity;
 
 use App\Repository\QuestionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -10,7 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Question
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column]
     private int $id;
 
@@ -20,11 +20,9 @@ class Question
     #[ORM\OneToMany(mappedBy: 'question', targetEntity: AnswerVariant::class)]
     private Collection $answersVariants;
 
-    #[ORM\OneToMany(mappedBy: 'question', targetEntity: Answer::class)]
-    private Collection $answers;
-
-    public function __construct(string $text)
+    public function __construct(int $id, string $text)
     {
+        $this->id = $id;
         $this->text = $text;
     }
 

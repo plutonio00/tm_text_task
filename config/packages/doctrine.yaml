@@ -23,6 +23,12 @@ doctrine:
                 prefix: 'App\Entity'
                 alias: App
 
+            Fixtures:
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/DataFixtures/Entity'
+                prefix: 'App\DataFixtures\Entity'
+                alias: Fixtures
+
 when@test:
     doctrine:
         dbal:
