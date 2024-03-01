@@ -30,15 +30,11 @@ class QuizService
         $quiz = new Quiz(new DateTime());
 
         foreach ($selectedVariantsSorted as $item) {
-            $isRight = true;
+
             $question = $item['question'];
             $selectedVariants = $item['selected_variants'];
 
-            foreach ($selectedVariants as $selectedVariant) {
-                $isRight = $isRight && $selectedVariant->isCorrect();
-            }
-
-            $quiz->addAnswer(new Answer($isRight, $question, $selectedVariants));
+            $quiz->addAnswer(new Answer($question, $selectedVariants));
         }
 
         return $quiz;

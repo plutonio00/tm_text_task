@@ -30,14 +30,24 @@ class Answer
     private Collection $variants;
 
     public function __construct(
-        bool $isRight,
         Question $question,
         array $variants,
     )
     {
-        $this->isRight = $isRight;
         $this->question = $question;
         $this->variants = new ArrayCollection($variants);
+        $this->isRight = $this->checkAnswer();
+    }
+
+    private function checkAnswer(): bool
+    {
+        $isRight = true;
+
+        foreach ($this->variants as $variant) {
+            $isRight = $isRight && $variant->isCorrect();
+        }
+
+        return $isRight;
     }
 
     public function getQuestion(): ?Question
