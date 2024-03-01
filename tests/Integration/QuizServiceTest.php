@@ -49,7 +49,7 @@ class QuizServiceTest extends KernelTestCase
     public static function variantsProvider(): array
     {
         return [
-            'all variants are correct' => [
+            'example answers' => [
                 'variantsIds' => [1, 3, 4, 5, 7, 8, 9, 11, 12, 13, 17],
                 'expectedStatistic' => [
                     'rightAnswersQuestionsIds' => [2, 5],
