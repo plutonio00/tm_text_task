@@ -15,3 +15,9 @@ add-env:
 
 composer-install:
 	docker-compose exec php-fpm composer install
+
+test:
+	docker-compose exec php-fpm bin/phpunit
+
+clear-cache:
+	docker-compose exec php-fpm bin/console cache:clear
