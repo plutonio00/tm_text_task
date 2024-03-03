@@ -47,7 +47,8 @@ Cсылка на GitHub / Bitbucket с кодом и инструкцией по
 6. make load-fixtures
 
 Помимо этого нужно сделать запись в файле /etc/hosts
-127.0.0.1      fuzzy-logic.local
+
+`127.0.0.1      fuzzy-logic.local`
 
 После этого проект будет доступен по адресу http://fuzzy-logic.local/ (в случае если порт для nginx не 80, то http://fuzzy-logic.local:port/)
 
