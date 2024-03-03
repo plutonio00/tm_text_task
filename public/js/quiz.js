@@ -13,6 +13,14 @@ $(document).ready(function () {
         $nextContainer.removeClass('d-none');
     });
 
+    $('.back-btn').on('click', function () {
+        let $currentContainer = $(this).closest('.question-container');
+        let $previousContainer = $currentContainer.prev('.question-container');
+
+        $currentContainer.addClass('d-none');
+        $previousContainer.removeClass('d-none');
+    });
+
     function isValidAnswer ($container) {
         let checkboxesChecked = $container.find('input[type="checkbox"]:checked').length;
 

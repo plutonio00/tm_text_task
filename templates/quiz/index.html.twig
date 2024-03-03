@@ -28,6 +28,10 @@
                             {% endfor %}
                         </div>
 
+                        {% if not loop.first %}
+                            <button type="button" class="btn btn-primary back-btn">Назад</button>
+                        {% endif %}
+
                         {% if loop.last %}
                             <button id="submit-btn" type="submit" class="btn btn-primary">Закончить опрос</button>
                         {% else %}
