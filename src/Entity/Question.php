@@ -17,7 +17,7 @@ class Question
     #[ORM\Column(length: 255)]
     private string $text;
 
-    #[ORM\OneToMany(mappedBy: 'question', targetEntity: AnswerVariant::class)]
+    #[ORM\OneToMany(mappedBy: 'question', targetEntity: AnswerVariant::class, fetch: 'EAGER')]
     private Collection $answersVariants;
 
     #[ORM\OneToMany(mappedBy: 'question', targetEntity: Answer::class)]

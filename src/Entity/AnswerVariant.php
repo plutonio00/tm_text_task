@@ -15,7 +15,7 @@ class AnswerVariant
     #[ORM\Column]
     private int $id;
 
-    #[ORM\ManyToOne(inversedBy: 'answers')]
+    #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'answersVariants')]
     #[ORM\JoinColumn(nullable: false)]
     private Question $question;
 
