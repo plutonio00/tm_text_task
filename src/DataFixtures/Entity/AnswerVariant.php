@@ -2,12 +2,9 @@
 
 namespace App\DataFixtures\Entity;
 
-use App\Repository\AnswerVariantRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: AnswerVariantRepository::class)]
+#[ORM\Entity]
 class AnswerVariant
 {
     #[ORM\Id]
@@ -35,25 +32,5 @@ class AnswerVariant
         $this->question = $question;
         $this->text = $text;
         $this->isCorrect = $isCorrect;
-    }
-
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    public function getQuestion(): Question
-    {
-        return $this->question;
-    }
-
-    public function getText(): string
-    {
-        return $this->text;
-    }
-
-    public function isCorrect(): bool
-    {
-        return $this->isCorrect;
     }
 }

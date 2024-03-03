@@ -30,11 +30,7 @@ class QuizService
         $quiz = new Quiz(new DateTime());
 
         foreach ($selectedVariantsSorted as $item) {
-
-            $question = $item['question'];
-            $selectedVariants = $item['selected_variants'];
-
-            $quiz->addAnswer(new Answer($question, $selectedVariants));
+            $quiz->addAnswer(new Answer($item['question'], $item['selected_variants']));
         }
 
         return $quiz;
@@ -42,23 +38,23 @@ class QuizService
 
     private function sortSelectedVariantsByQuestionId(array $selectedVariants): array
     {
-        $selectedVariantsList = [];
+        $selectedVariantsSorted = [];
 
         foreach ($selectedVariants as $selectedVariant) {
             $question = $selectedVariant->getQuestion();
             $questionId = $question->getId();
 
-            if (!isset($selectedVariantsList[$questionId])) {
-                $selectedVariantsList[$questionId] = [
+            if (!isset($selectedVariantsSorted[$questionId])) {
+                $selectedVariantsSorted[$questionId] = [
                     'question' => $question,
                     'selected_variants' => [],
                 ];
             }
 
-            $selectedVariantsList[$questionId]['selected_variants'][] = $selectedVariant;
+            $selectedVariantsSorted[$questionId]['selected_variants'][] = $selectedVariant;
         }
 
-        return $selectedVariantsList;
+        return $selectedVariantsSorted;
     }
 
     public function saveResult(Quiz $quiz): void
